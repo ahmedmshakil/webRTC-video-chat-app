@@ -47,12 +47,14 @@ registerForm.addEventListener('submit', async (e) => {
             alert('Registration successful! Please login.');
             registerBox.style.display = 'none';
             loginBox.style.display = 'block';
+            // Clear the form
+            registerForm.reset();
         } else {
             alert(data.message || 'Registration failed');
         }
     } catch (error) {
         console.error('Error:', error);
-        alert('Registration failed');
+        alert('Registration failed: ' + error.message);
     }
 });
 
@@ -66,6 +68,7 @@ loginForm.addEventListener('submit', async (e) => {
     };
 
     try {
+        console.log('Attempting login with:', loginData.username); // Debug log
         const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {
@@ -75,8 +78,9 @@ loginForm.addEventListener('submit', async (e) => {
         });
 
         const data = await response.json();
+        console.log('Login response:', data); // Debug log
         
-        if (response.ok) {
+        if (response.ok && data.token) {
             // Store the token
             localStorage.setItem('token', data.token);
             localStorage.setItem('username', loginData.username);
@@ -85,14 +89,19 @@ loginForm.addEventListener('submit', async (e) => {
             authContainer.style.display = 'none';
             videoChatContainer.style.display = 'flex';
             
+            // Clear the form
+            loginForm.reset();
+            
             // Initialize WebRTC after successful login
-            initializeWebRTC();
+            if (typeof initializeWebRTC === 'function') {
+                initializeWebRTC();
+            }
         } else {
-            alert(data.message || 'Login failed');
+            alert(data.message || 'Invalid username or password');
         }
     } catch (error) {
-        console.error('Error:', error);
-        alert('Login failed');
+        console.error('Login error:', error);
+        alert('Login failed: ' + error.message);
     }
 });
 
@@ -102,6 +111,8 @@ window.addEventListener('load', () => {
     if (token) {
         authContainer.style.display = 'none';
         videoChatContainer.style.display = 'flex';
-        initializeWebRTC();
+        if (typeof initializeWebRTC === 'function') {
+            initializeWebRTC();
+        }
     }
 }); 

@@ -1,1 +1,76 @@
- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Chat App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div id="auth-container">
+        <div class="auth-box" id="login-box">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="text" id="login-username" placeholder="Username" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+        </div>
+
+        <div class="auth-box" id="register-box" style="display: none;">
+            <h2>Register</h2>
+            <form id="register-form">
+                <input type="text" id="register-username" placeholder="Username" required>
+                <input type="email" id="register-email" placeholder="Email" required>
+                <input type="text" id="register-fullname" placeholder="Full Name" required>
+                <input type="password" id="register-password" placeholder="Password" required>
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+        </div>
+    </div>
+
+    <div id="video-chat-container" style="display: none;">
+        <div class="header">
+            <h1>Video Chat</h1>
+            <div class="room-info">
+                <input type="text" id="room-id" placeholder="Enter Room ID">
+                <button id="join-btn">Join Room</button>
+                <button id="leave-btn" style="display: none;">Leave Room</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div id="video-grid"></div>
+            
+            <div class="controls">
+                <button id="toggle-video" class="control-btn">
+                    <i class="fas fa-video"></i>
+                </button>
+                <button id="toggle-audio" class="control-btn">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <button id="share-screen" class="control-btn">
+                    <i class="fas fa-desktop"></i>
+                </button>
+            </div>
+
+            <div class="chat-container">
+                <div id="chat-messages"></div>
+                <div class="chat-input">
+                    <input type="text" id="chat-message" placeholder="Type a message...">
+                    <button id="send-message">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/webrtc.js"></script>
+    <script src="/js/chat.js"></script>
+</body>
+</html> 
